@@ -25,3 +25,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+.blur-div {
+  opacity: 0.6;
+}
+
