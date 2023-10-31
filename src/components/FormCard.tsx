@@ -1,5 +1,6 @@
 import React from 'react'
 import { Skeleton } from './ui/skeleton'
+import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 
@@ -10,6 +11,8 @@ export const FormCardSkeleton = ()=>{
 }
 
 const FormCard = () => {
+    const router = useRouter();
+
   return (
    <div style={{border:"1px solid #d5cdcd"}} className='flex px-6 py-3 flex-col rounded-xl gap-1' >
     <div className="title flex justify-between">
@@ -23,9 +26,15 @@ const FormCard = () => {
         </div>
     </div>
     <div className="description text-gray-400 font-medium">asdasdzxcasda</div>
-    <button style={{marginTop:"2rem"}} type='button' className='flex rounded-xl gap-2 bg-slate-800 p-2 text-white font-semibold text-xl justify-center items-center' >
+    <div className="flex justify-between items-center">
+    <button style={{marginTop:"2rem"}} type='button' className='flex rounded-md gap-2 bg-slate-800 p-2 text-white font-medium text-lg justify-center items-center' >
         View Submission <Image src={'/RightArrow.svg'} alt='rightarrow' height={20} width={20}/>
     </button>
+    <button style={{marginTop:"2rem"}} type='button' 
+    onClick={()=>router.push(`/form/${1}`)} className='flex rounded-md gap-2 bg-[#E0E0E0] p-2 text-black font-medium text-lg justify-center items-center' >
+        Edit Form <Image src={'/Edit.svg'} alt='rightarrow' height={20} width={20}/>
+    </button>
+    </div>
    </div>
   )
 }

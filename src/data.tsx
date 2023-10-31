@@ -10,6 +10,19 @@ export type FormCardData = {
     shadowColor:string,
 }
 
+export type formType = {form:{
+    id: number;
+    userId: string;
+    createdAt: Date;
+    published: boolean;
+    name: string;
+    description: string;
+    content: string;
+    visits: number;
+    submissions: number;
+    shareURL: string;
+}} | null
+
 export const CardData:FormCardData[] = [
     {
         title:"Total visits",

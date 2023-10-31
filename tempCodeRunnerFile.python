@@ -1,0 +1,33 @@
+import requests
+import json
+
+def clean_data():
+    url = 'https://coderbyte.com/api/challenges/json/json-cleaning'
+    r = requests.get(url)
+    
+    if r.status_code == 200:
+        data = r.json()
+        clean_data_recursive(data)
+        return json.dumps(data)
+    else:
+        return f"Failed to retrieve data from {url}"
+
+def clean_data_recursive(data):
+    if isinstance(data, list):
+        for item in data[:]:  # Iterate over a copy to allow removal
+            if isinstance(item, (str, int, float)) and (item == 'N/A' or item == '-' or item == ''):
+                data.remove(item)
+            elif isinstance(item, dict):
+                clean_data_recursive(item)
+            elif isinstance(item, list):
+                clean_data_recursive(item)
+    elif isinstance(data, dict):
+        for key, value in list(data.items()):  # Iterate over a copy to allow removal
+            if isinstance(value, (str, int, float)) and (value == 'N/A' or value == '-' or value == ''):
+                del data[key]
+            elif isinstance(value, dict):
+                clean_data_recursive(value)
+            elif isinstance(value, list):
+                clean_data_recursive(value)
+
+print(clean_data())

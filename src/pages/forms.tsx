@@ -24,7 +24,7 @@ export async function getServerSideProps(context: any) {
       createdAt: "desc",
     },
   });
-  console.log(forms);
+  console.log(forms,27);
   return {
     props: {
       forms: JSON.parse(JSON.stringify(forms)),

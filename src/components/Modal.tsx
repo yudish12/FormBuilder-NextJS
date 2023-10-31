@@ -9,17 +9,14 @@ const Modal = ({setOpen}:{setOpen:React.Dispatch<React.SetStateAction<boolean>>}
   const [formName,setFormName] = useState<string>('');
   const [formDesc,setFormDesc] = useState<string>('');
   const router = useRouter();
-  const refreshData = () => {
-    router.replace(router.asPath);
-  }
-
+  
   const handleCreateForm = async()=>{
     try {
       const resp = await axios.post(`/api/createform`,{
         name:formName,
         description:formDesc
       })
-      if(resp.status===200) refreshData();
+      router.replace('/forms')
     } catch (error) {
       console.log(error);
     }
@@ -52,6 +49,7 @@ const Modal = ({setOpen}:{setOpen:React.Dispatch<React.SetStateAction<boolean>>}
     <Button onClick={handleCreateForm} className='w-full bg-black hover:text-black text-white text-2xl' variant={"secondary"} >
         Save
     </Button>
+    
     </div>
     </form>
   )
