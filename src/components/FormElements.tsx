@@ -18,12 +18,14 @@ export type FormElement = {
         label:string;
     },
 
-    designerComponent:React.FC,//in drag and drop
+    designerComponent: React.FC<{
+        elementInstance: FormElementInstance;
+      }>,//in drag and drop
     formComponent:React.FC, //in preview page
     properties:React.FC //in properties section
 }
 
-type FormElementType = {
+export type FormElementType = {
     [key in ElementsType] :FormElement
 }
 
