@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import DesignerSideBar from './DesignerSideBar'
-import { DragEndEvent, useDndMonitor, useDroppable } from '@dnd-kit/core'
+import { DragEndEvent, useDndMonitor, useDraggable, useDroppable } from '@dnd-kit/core'
 import { cn, idGenerator } from '@/lib/utils'
 import {BiSolidTrash} from 'react-icons/bi'
 import useDesigner from './hooks/useDesigner'
@@ -15,7 +15,7 @@ const Designer = () => {
     }
   })
 
-  const {addElement,elements} = useDesigner()
+  const {addElement,elements,selectedElement,setSelectedElement} = useDesigner()
   
 
   useDndMonitor({
@@ -60,8 +60,10 @@ const Designer = () => {
   })
 
   return (
-    <div className='flex w-full h-full' > 
-        <div className='p-4 w-full'>
+    <div  className='flex w-full h-full' > 
+        <div  onClick={() => {
+          if (selectedElement) setSelectedElement(null);
+        }} className='p-4 w-full'>
             <div ref={droppable.setNodeRef} className={cn('bg-background max-w-[920px] h-full m-auto rounded-xl flex flex-col flex-grow items-center justify-start flex-1 overflow-y-auto',droppable.isOver && "ring-2 ring-primary/20")} >
             {!droppable.isOver && elements.length===0 && (
             <p className="text-3xl text-muted-foreground flex flex-grow items-center font-bold">Drop here</p>
@@ -89,6 +91,7 @@ const Designer = () => {
 function DesignerElementWrapper({element}:{element:FormElementInstance}){
   // console.log(FormElements[element.type])
   const [mouseIsOver, setMouseIsOver] = useState<boolean>(false);
+  const {removeElement,setSelectedElement} = useDesigner()
 
   const topHalf = useDroppable({
     id:element.id+"-top",
@@ -109,8 +112,30 @@ function DesignerElementWrapper({element}:{element:FormElementInstance}){
   })
 
   const DesignerElement = FormElements[element.type].designerComponent
+
+  const draggable = useDraggable({
+    id:element.id+"-drag-handler",
+    data:{
+      isDesginerElement:true,
+      type:element.type,
+      elementId:element.id
+    }
+  })
+
+  if(draggable.isDragging){
+    return null;
+  }
+
   return (
-    <div className="relative h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset" onMouseEnter={() => {
+    <div
+      ref={draggable.setNodeRef}
+      {...draggable.listeners}
+      {...draggable.attributes}
+      onClick={(e)=>{
+        e.stopPropagation();
+        setSelectedElement(element)
+      }}
+    className="relative h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset" onMouseEnter={() => {
       setMouseIsOver(true);
     }}
     onMouseLeave={() => {
@@ -127,7 +152,7 @@ function DesignerElementWrapper({element}:{element:FormElementInstance}){
               variant={"outline"}
               onClick={(e:any) => {
                 e.stopPropagation(); // avoid selection of element while deleting
-                // removeElement(element.id);
+                removeElement(element.id);
               }}
             >
               <BiSolidTrash className="h-6 w-6" />

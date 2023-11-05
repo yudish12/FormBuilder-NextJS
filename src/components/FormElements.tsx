@@ -22,7 +22,9 @@ export type FormElement = {
         elementInstance: FormElementInstance;
       }>,//in drag and drop
     formComponent:React.FC, //in preview page
-    properties:React.FC //in properties section
+    properties:React.FC<{
+        elementInstance: FormElementInstance;
+      }> //in properties section
 }
 
 export type FormElementType = {
