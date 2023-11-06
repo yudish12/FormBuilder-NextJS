@@ -37,7 +37,7 @@ export const TextFieldFormElement: FormElement = {
     label: "TextField",
   },
   designerComponent: DesignerComponent,
-  formComponent: () => <div>Form Component</div>,
+  formComponent:FormComponent,
   properties: PropertiesComponent,
 };
 
@@ -67,6 +67,30 @@ function DesignerComponent({
       <Input
         readOnly
         disabled
+        placeholder={element.extraAttributes.placeholder}
+      />
+      {element.extraAttributes.helperText && (
+        <p className="text-muted-foreground text-[0.8rem]">
+          {element.extraAttributes.helperText}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function FormComponent({
+  elementInstance,
+}: {
+  elementInstance: FormElementInstance;
+}) {
+  const element = elementInstance as CustomInstance;
+  return (
+    <div className="flex text-slate-800 flex-col gap-2 w-full">
+      <Label>
+        {element.extraAttributes?.label}
+        {element.extraAttributes.required && "*"}
+      </Label>
+      <Input
         placeholder={element.extraAttributes.placeholder}
       />
       {element.extraAttributes.helperText && (

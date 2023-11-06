@@ -4,6 +4,7 @@ import { formDataType } from "../Fields/TextField";
 
 export type DesignerContextType = {
     elements:FormElementInstance[],
+    setElements:Dispatch<SetStateAction<FormElementInstance[]>>,
     selectedElement:FormElementInstance|null,
     addElement:(index:number,element:FormElementInstance)=>void,
     removeElement:(id:string)=>void,
@@ -39,7 +40,7 @@ export default function DesignerContextProvider({children}:{children:ReactNode})
     }
 
     return (
-        <DesignerContext.Provider value={{elements,addElement,removeElement,selectedElement,setSelectedElement,updateElement}} >
+        <DesignerContext.Provider value={{setElements,elements,addElement,removeElement,selectedElement,setSelectedElement,updateElement}} >
             {children}
         </DesignerContext.Provider>
     )

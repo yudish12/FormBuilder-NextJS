@@ -15,7 +15,7 @@ const Designer = () => {
     }
   })
 
-  const {addElement,elements,selectedElement,setSelectedElement} = useDesigner()
+  const {addElement,elements,selectedElement,setSelectedElement,removeElement} = useDesigner()
   
 
   useDndMonitor({
@@ -23,21 +23,28 @@ const Designer = () => {
       const {active,over} = event;
       console.log(active,over)
       if(!active || !over)return;
-
       const isDesignerBtnElement = active.data?.current?.isDesignerBtnElement
-      if(isDesignerBtnElement){
+      
+      const isDroppingOverBottomHalf = over.data.current?.isBottomHalfDesignerElement
+      const isDroppingOverTopHalf = over.data.current?.isTopHalfDesignerElement
+      
+      const DroppingOverElement = isDroppingOverBottomHalf || isDroppingOverTopHalf;
+      
+      const droppingSidebarBtnElement = DroppingOverElement && isDesignerBtnElement;
+
+
+      if(isDesignerBtnElement && !DroppingOverElement){
+        console.log("normal")
         const type = active.data.current?.type
         const newElement = FormElements[type as ElementsType].construct(idGenerator());
         addElement(0,newElement)
         return;
       }
 
-      const isDroppingOverBottomHalf = over.data.current?.isBottomHalfDesignerElement
-      const isDroppingOverTopHalf = over.data.current?.isTopHalfDesignerElement
-      const DroppingOverElement = isDroppingOverBottomHalf || isDroppingOverTopHalf;
-      const droppingSidebarBtnElement = DroppingOverElement && isDesignerBtnElement;
+      
       
       if(droppingSidebarBtnElement){
+        console.log(isDroppingOverBottomHalf)
         const type = active.data?.current?.type;
         const newElement = FormElements[type as ElementsType].construct(idGenerator());
         const overId = over.data.current?.elementId;
@@ -51,8 +58,38 @@ const Designer = () => {
         if (isDroppingOverBottomHalf) {
           indexForNewElement = overElementIndex + 1;
         }
-
+        console.log(indexForNewElement,overElementIndex)
         addElement(indexForNewElement, newElement);
+        return;
+      }
+
+      const isDraggingDesignerElement = active.data.current?.isDesginerElement;
+      const isDroppingOverDesignerArea = over.data.current?.isDesignerDrop;
+      console.log(isDraggingDesignerElement, over.data.current)
+      if(isDraggingDesignerElement && isDroppingOverDesignerArea){
+        console.log("!23");
+        const type = active.data.current?.type;
+        const newElement = FormElements[type as ElementsType].construct(idGenerator());
+        removeElement(active.data.current?.elementId)
+        addElement(elements.length,newElement)
+        return;
+      }
+
+      const isDroppingDesignerElementOverTopHalf = over.data.current?.isTopHalfDesignerElement;
+      const isDroppingDesignerElementOverBottomHalk = over.data.current?.isBottomHalfDesignerElement;
+      
+      if(isDroppingDesignerElementOverBottomHalk||isDroppingDesignerElementOverTopHalf){
+        console.log("asd")
+        const type = active.data.current?.type;
+        const newElement = FormElements[type as ElementsType].construct(idGenerator());
+        const overId = over.data.current?.elementId
+        const overElementIndex = elements.findIndex((e)=>e.id===overId)
+
+        if(overElementIndex===-1)throw new Error("No element found")
+        let indexForNewElement = overElementIndex
+        if(isDroppingDesignerElementOverBottomHalk) indexForNewElement = overElementIndex + 1;
+        removeElement(active.data.current?.elementId)
+        addElement(indexForNewElement,newElement)
         return;
       }
 
@@ -98,7 +135,8 @@ function DesignerElementWrapper({element}:{element:FormElementInstance}){
     data:{
       type:element.type,
       elementId:element.id,
-      isBottomHalfDesignerElement:true
+      isTopHalfDesignerElement:true
+      
     }
   })
 
@@ -107,7 +145,7 @@ function DesignerElementWrapper({element}:{element:FormElementInstance}){
     data:{
       type:element.type,
       elementId:element.id,
-      isTopHalfDesignerElement:true
+      isBottomHalfDesignerElement:true
     }
   })
 

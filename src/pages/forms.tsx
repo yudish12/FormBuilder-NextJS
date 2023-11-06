@@ -96,7 +96,8 @@ const Forms = ({
         <FormCardSkeleton key={e} />
     ))} >
         {forms.map((e)=>{
-            return <FormCard key={e.id} />
+            return <FormCard
+            formData={e} key={e.id} />
         })}
     </Suspense>
         </div>

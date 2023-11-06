@@ -21,7 +21,7 @@ export type FormElement = {
     designerComponent: React.FC<{
         elementInstance: FormElementInstance;
       }>,//in drag and drop
-    formComponent:React.FC, //in preview page
+    formComponent:React.FC<{elementInstance:FormElementInstance}>, //in preview page
     properties:React.FC<{
         elementInstance: FormElementInstance;
       }> //in properties section
