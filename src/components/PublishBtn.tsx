@@ -1,7 +1,7 @@
-
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { FaSpinner } from "react-icons/fa";
+import axios from "axios";
 import { MdOutlinePublish } from "react-icons/md";
 import {
   AlertDialog,
@@ -16,28 +16,29 @@ import {
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
 import { toast } from "./ui/use-toast";
-import axios from "axios";
+
 
 function PublishFormBtn({ id }: { id: number }) {
-  const [loading, startTransition] = useTransition();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   async function publishForm() {
+    setLoading(true);
     try {
       const resp = await axios.patch(`/api/publishform?formid=${id}`)
       if(resp.status===200){
+        console.log("Asd")
+
+       router.replace(window.location.href)
         
-      toast({
-        title: "Success",
-        description: "Your form is now available to the public",
-      });
+      setLoading(false);
       }
-      router.refresh();
     } catch (error) {
       toast({
         title: "Error",
         description: "Something went wrong",
       });
+      setLoading(false);
     }
   }
 
@@ -53,11 +54,10 @@ function PublishFormBtn({ id }: { id: number }) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. After publishing you will not be able to edit this form. <br />
+            This action cannot be undone. After publishing, you will not be able to edit this form. <br />
             <br />
             <span className="font-medium">
-              By publishing this form you will make it available to the public and you will be able to collect
-              submissions.
+              By publishing this form, you will make it available to the public and be able to collect submissions.
             </span>
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -67,7 +67,7 @@ function PublishFormBtn({ id }: { id: number }) {
             disabled={loading}
             onClick={(e) => {
               e.preventDefault();
-              startTransition(publishForm);
+              publishForm(); // Wrap the function call in startTransition
             }}
           >
             Proceed {loading && <FaSpinner className="animate-spin" />}

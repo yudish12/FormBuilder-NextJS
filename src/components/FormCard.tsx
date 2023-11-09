@@ -29,7 +29,7 @@ const FormCard = ({formData}:{formData:Form}) => {
     </div>
     <div className="description text-gray-400 font-medium">{formData.description}</div>
     <div className={`flex ${formData.published?"justify-center w-full":"justify-between"} items-center`}>
-    <button style={{marginTop:"2rem"}} type='button' className={`${formData.published?"w-full":""} flex rounded-md gap-2 bg-slate-800 p-2 text-white font-medium text-lg justify-center items-center`} >
+    <button onClick={()=>router.push(`/formdetails/${formData.id}`)} style={{marginTop:"2rem"}} type='button' className={`${formData.published?"w-full":""} flex rounded-md gap-2 bg-slate-800 p-2 text-white font-medium text-lg justify-center items-center`} >
         View Submission <Image src={'/RightArrow.svg'} alt='rightarrow' height={20} width={20}/>
     </button>
     
