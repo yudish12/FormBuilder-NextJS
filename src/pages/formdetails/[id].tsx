@@ -44,6 +44,7 @@ export async function getServerSideProps(context: any) {
 
 const Component = ({form}:{form:Form}) => {
     const router = useRouter();
+    console.log(form)
     return (
     <section className='w-full p-16' >
       <div className="title pb-4 border-b border-muted flex justify-between item-center">
@@ -57,7 +58,7 @@ const Component = ({form}:{form:Form}) => {
       </div>
       <div className="grid pt-12 lg:grid-cols-4 lg:grid-rows-1 md:grid-cols-2 md:grid-rows-2 grid-cols-1 gap-y-6 gap-x-8 place-items-center w-full">
           {CardData.map((e) => (
-            <FormCard key={e.title} {...e} value={form.submissions} />
+            <FormCard key={e.title} {...e} value={form.submissions} visits={form.visits} />
           ))}
         </div>
 

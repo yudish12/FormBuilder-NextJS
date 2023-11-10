@@ -8,6 +8,7 @@ export type FormCardData = {
     Icon:string,
     subHeading:string,
     shadowColor:string,
+    visits:number
 }
 
 export type formType = {form:{
@@ -29,6 +30,7 @@ export const CardData:FormCardData[] = [
         value:0,
         subHeading:'All time form visits',
         Icon:"EyeOpen",
+        visits:0,
         shadowColor:"blue",
     },
     {
@@ -36,6 +38,7 @@ export const CardData:FormCardData[] = [
         value:0,
         subHeading:'All time form Submissions',
         Icon:"Reader",
+        visits:0,
         shadowColor:"yellow",
     },
     {
@@ -43,6 +46,7 @@ export const CardData:FormCardData[] = [
         value:0,
         subHeading:'View Rate in Submission rate',
         Icon:"CursorArrow",
+        visits:0,
         shadowColor:"green"
     },
     {
@@ -50,6 +54,7 @@ export const CardData:FormCardData[] = [
         value:0,
         subHeading:'Visits that leaves without interacting',
         Icon:"BarChart",
+        visits:0,
         shadowColor:"red"
     },
 ]

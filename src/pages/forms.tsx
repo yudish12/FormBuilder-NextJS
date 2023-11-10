@@ -50,7 +50,8 @@ const Forms = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   console.log(forms);
-
+  const totalVisits = forms.reduce((sum, form) => sum + form.visits, 0);
+  const totalValue = forms.reduce((sum,form)=>sum+form.submissions,0);
   return (
     <div className={` relative flex justify-center `}>
       {open && <Modal setOpen={setOpen} />}
@@ -61,7 +62,7 @@ const Forms = ({
       >
         <div className="grid lg:grid-cols-4 lg:grid-rows-1 md:grid-cols-2 md:grid-rows-2 grid-cols-1 gap-y-6 gap-x-8 place-items-center w-full">
           {CardData.map((e) => (
-            <StatCard key={e.title} {...e} />
+            <StatCard key={e.title} {...e} value={totalValue} visits={totalVisits} />
           ))}
         </div>
 

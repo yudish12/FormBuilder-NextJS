@@ -5,7 +5,8 @@ import prisma from "@/lib/prisma";
 import { Form } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
+import React,{useEffect} from "react";
 
 export async function getServerSideProps(context: any) {
     const id = context.query.id;
@@ -48,6 +49,27 @@ export default function SubmitPage({
   form:Form;
 }) {
     const router = useRouter();
+
+    const { isSignedIn, user, isLoaded } = useUser();
+
+    useEffect(() => {
+      const formVisited = async()=>{
+        try {
+          const resp = await axios.patch(`/api/visited?formid=${form.id}`)
+          console.log(resp)
+          return resp;
+        } catch (error) {
+          console.log(error)
+          throw new Error("Something Went Wrong")
+        }
+        
+      }
+      if(!isSignedIn){
+        formVisited();
+      }
+      
+    }, [form.id, isSignedIn])
+ 
 
 //   if (!form) {
 //     throw new Error("form not found");

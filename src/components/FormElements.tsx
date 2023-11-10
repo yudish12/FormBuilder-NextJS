@@ -19,7 +19,7 @@ export type FormElement = {
         icon:string;
         label:string;
     },
-    validate:(field:FormElementInstance, actualValue:string)=>boolean
+    validate:(field:FormElementInstance, actualValue:string)=>boolean 
     designerComponent: React.FC<{
         elementInstance: FormElementInstance;
       }>,//in drag and drop
@@ -28,7 +28,7 @@ export type FormElement = {
         submitValue?: SubmitFunction;
         isInvalid?: boolean;
         defaultValue?: string;
-      }>, //in preview page
+      }>, //in preview page and submit page
     properties:React.FC<{
         elementInstance: FormElementInstance;
       }> //in properties section

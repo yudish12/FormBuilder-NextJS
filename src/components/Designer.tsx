@@ -36,7 +36,7 @@ const Designer = () => {
       if(isDesignerBtnElement && !DroppingOverElement){
         console.log("normal")
         const type = active.data.current?.type
-        const newElement = FormElements[type as ElementsType].construct(idGenerator());
+        const newElement =  FormElements[type as ElementsType].construct(idGenerator());
         addElement(0,newElement)
         return;
       }
