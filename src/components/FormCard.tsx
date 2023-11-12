@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import { Form } from '@prisma/client'
+import Link from 'next/link'
 
 
 
@@ -29,14 +30,14 @@ const FormCard = ({formData}:{formData:Form}) => {
     </div>
     <div className="description text-gray-400 font-medium">{formData.description}</div>
     <div className={`flex ${formData.published?"justify-center w-full":"justify-between"} items-center`}>
-    <button onClick={()=>router.push(`/formdetails/${formData.id}`)} style={{marginTop:"2rem"}} type='button' className={`${formData.published?"w-full":""} flex rounded-md gap-2 bg-slate-800 p-2 text-white font-medium text-lg justify-center items-center`} >
+    {formData.published && <Link href={`/formdetails/${formData.id}`} style={{marginTop:"2rem"}} type='button' className={`${formData.published?"w-full":""} flex rounded-md gap-2 bg-slate-800 p-2 text-white font-medium text-lg justify-center items-center`} >
         View Submission <Image src={'/RightArrow.svg'} alt='rightarrow' height={20} width={20}/>
-    </button>
+    </Link>}
     
-    {!formData.published &&<button style={{marginTop:"2rem"}} type='button' 
-    onClick={()=>router.push(`/form/${formData.id}`)} className='flex rounded-md gap-2 bg-[#E0E0E0] p-2 text-black font-medium text-lg justify-center items-center' >
+    {!formData.published &&<Link style={{marginTop:"2rem"}} type='button' 
+    href={`/form/${formData.id}`} className='flex w-full rounded-md gap-2 bg-[#E0E0E0] p-2 text-black font-medium text-lg justify-center items-center' >
         Edit Form <Image src={'/Edit.svg'} alt='rightarrow' height={20} width={20}/>
-    </button> }
+    </Link> }
     </div>
    </div>
   )

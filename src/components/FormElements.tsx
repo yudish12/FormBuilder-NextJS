@@ -1,6 +1,16 @@
+import { CheckboxFormElement } from "./Fields/Checkbox";
+import { NumberFieldFormElement } from "./Fields/NumberField";
+import { ParagraphFieldFormElement } from "./Fields/ParagraphField";
+import { SelectFieldFormElement } from "./Fields/SelectField";
+import { SeperatorFieldFormElement } from "./Fields/SeperatorField";
+import { SpacerFieldFormElement } from "./Fields/SpacerField";
+import { SubTitleFieldFormElement } from "./Fields/SubTitle";
+import { TextAreaFormElement } from "./Fields/TextAreaField";
 import  { TextFieldFormElement } from "./Fields/TextField";
+import  { TitleFieldFormElement } from "./Fields/TitleField";
 
-export type ElementsType = "TextField";
+export type ElementsType = "TextField"|"TitleField"|"ParagraphField"|
+"SubTitleField"|"SpacerField"|"SeperatorField"|"NumberField"|"TextAreaField"|"Checkbox"|"SelectField";
 
 export type FormElementInstance = {
     id:string,
@@ -39,5 +49,14 @@ export type FormElementType = {
 }
 
 export const FormElements:FormElementType = {
-    TextField:TextFieldFormElement
+    TextField:TextFieldFormElement,
+    TitleField:TitleFieldFormElement,
+    ParagraphField:ParagraphFieldFormElement,
+    SubTitleField:SubTitleFieldFormElement,
+    SpacerField:SpacerFieldFormElement,
+    SeperatorField:SeperatorFieldFormElement,
+    NumberField:NumberFieldFormElement,
+    TextAreaField:TextAreaFormElement,
+    Checkbox:CheckboxFormElement,
+    SelectField:SelectFieldFormElement
 }

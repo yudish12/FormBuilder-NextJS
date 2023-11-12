@@ -5,11 +5,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "@/components/layout";
 import DesignerContextProvider from "@/components/context/DesignerContext";
+import NextTopLoader from 'nextjs-toploader';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ClerkProvider {...pageProps} afterSignInUrl="/" afterSignUpUrl="/">
       <Layout>
         <DesignerContextProvider>
+        <NextTopLoader
+          height={5}
+          speed={100}
+        />
           <Component {...pageProps} />
           <ToastContainer
             position="bottom-right"
