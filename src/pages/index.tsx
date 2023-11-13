@@ -18,7 +18,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             Made By{' '}
-            Yudish Chakrawarty ❤
+            Yudish ❤
 
           </a>
         </div>
