@@ -21,6 +21,7 @@ import {
 } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { AiOutlinePlus } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const type: ElementsType = "SelectField";
 
@@ -28,7 +29,7 @@ const extraAttributes = {
   label: "Select field",
   helperText: "Helper text",
   required: false,
-  options: [],
+  option: [],
   placeHolder: "Value here...",
 };
 
@@ -41,7 +42,7 @@ export const SelectFieldFormElement: FormElement = {
       label: "Select Field",
       helperText: "Helper Text",
       required: false,
-      options: [""],
+      option: [""],
       placeholder: "Value goes here",
     },
   }),
@@ -124,7 +125,7 @@ function FormComponent({
     setError(isInvalid === true);
   }, [isInvalid]);
 
-  const { label, required, placeHolder, helperText, options } =
+  const { label, required, placeHolder, helperText, option } =
     element.extraAttributes;
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -146,9 +147,9 @@ function FormComponent({
           <SelectValue placeholder={placeHolder} />
         </SelectTrigger>
         <SelectContent>
-          {options.map((option) => (
-            <SelectItem key={option} value={option}>
-              {option}
+          {option.map((op:string) => (
+            <SelectItem key={op} value={op}>
+              {op}
             </SelectItem>
           ))}
         </SelectContent>
@@ -175,12 +176,14 @@ function PropertiesComponent({
   const element = elementInstance as CustomInstance;
 
   const { updateElement } = useDesigner();
+  console.log(element.extraAttributes.option)
+  const [options,setOptions] = useState<string[]>([...element.extraAttributes.option]);
 
   const [formData, setFormData] = useState<formDataType>({
     label: element.extraAttributes.label,
     placeholder: element.extraAttributes.placeHolder,
     helperText: element.extraAttributes.helperText,
-    option: element.extraAttributes.options,
+    option: element.extraAttributes.option,
     required: element.extraAttributes.required,
   });
 
@@ -190,9 +193,20 @@ function PropertiesComponent({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleOptionInputChange = (e:any,index:number)=>{
+    setOptions((prev)=>{
+      let arr = [...prev];
+      arr[index] = e.target.value;
+      console.log(arr)
+      return arr;
+    })
+  }
+
   const applyChanges = (e: any) => {
     e.preventDefault();
-    updateElement(element.id, { ...element, extraAttributes: formData });
+    console.log(formData)
+    updateElement(element.id, { ...element, extraAttributes: {...formData,option:options} });
+    toast.success("Form Values Updated Save it Now!!")
   };
 
   return (
@@ -245,14 +259,15 @@ function PropertiesComponent({
         </p>
       </div>
       <Separator />
-      <div className="flex items-center gap-4">
-        <div className="flex justify-between">
+      <div className="flex flex-col items-center w-full gap-4">
+        <div className="flex justify-between w-full">
           <Label>Options</Label>
           <Button
             variant={"outline"}
             className="gap-2"
             onClick={(e) => {
               e.preventDefault(); // avoid submit
+              setOptions((prev)=>[...prev,"new option"]);
             }}
           >
             <AiOutlinePlus />
@@ -260,6 +275,7 @@ function PropertiesComponent({
           </Button>
         </div>
 
+          {options.map((el,i)=><Input key={i} value={el} onChange={(e)=>handleOptionInputChange(e,i)} />)}
       </div>
       <div>
         <div className="flex items-center gap-4">

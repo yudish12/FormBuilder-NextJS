@@ -5,6 +5,7 @@ import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import { Form } from '@prisma/client'
 import Link from 'next/link'
+import { EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons'
 
 
 
@@ -25,7 +26,10 @@ const FormCard = ({formData}:{formData:Form}) => {
     <div className="stats flex justify-between">
         <span>{date.toDateString()}</span>
         <div className="views">
-        <span>views</span>
+        <span className='flex items-center gap-2' >
+            <EyeOpenIcon />
+            <span className='font-semibold font-sans' >{formData.visits}</span>
+        </span>
         </div>
     </div>
     <div className="description text-gray-400 font-medium">{formData.description}</div>

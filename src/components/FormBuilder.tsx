@@ -8,7 +8,7 @@ import Designer from "./Designer";
 import DragOverlayWrapper from "./DragOverlayWrapper";
 import { useRouter } from 'next/router'
 import axios from "axios";
-import { toast } from "./ui/use-toast";
+import {toast} from 'react-toastify'
 import useDesigner from "./hooks/useDesigner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -35,13 +35,14 @@ const FormBuilder = ({ form }: { form: Form }) => {
   })
 
   const saveForm = async()=>{
-
+    console.log(elements)
     try {
         const resp = await axios.patch(`/api/updateForm?formid=${form.id}`,{
           body:JSON.stringify(elements)
         })
         if(resp.status===200){
-          console.log("dione")
+          toast.success("Form Saved Successfully")
+          router.replace("/forms")
         }
     } catch (error) {
       console.log(error)
@@ -86,10 +87,7 @@ const FormBuilder = ({ form }: { form: Form }) => {
                 className="mt-2 w-full"
                 onClick={() => {
                   navigator.clipboard.writeText(shareUrl);
-                  toast({
-                    title: "Copied!",
-                    description: "Link copied to clipboard",
-                  });
+                  toast.success("Link Copied to Clipboard")
                 }}
               >
                 Copy link

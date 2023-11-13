@@ -31,10 +31,12 @@ export default function DesignerContextProvider({children}:{children:ReactNode})
     }
 
     const updateElement = (id:string,element:FormElementInstance)=>{
+        console.log(element)
         setElements((prev) => {
             const newElements = [...prev];
             const index = newElements.findIndex((el) => el.id === id);
             newElements[index] = element;
+            console.log(newElements)
             return newElements;
           });
     }

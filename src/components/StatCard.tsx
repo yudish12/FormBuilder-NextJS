@@ -19,7 +19,7 @@ const FormCard = ({title,Icon,subHeading,value,visits,shadowColor}:FormCardData)
              priority
         />
         </div>
-        <h1 className='text-2xl leading-10 font-bold' >{title==="Total visits"?visits:(title==="Submission Rate"?(submissionRate+"%"):value)}</h1>
+        <h1 className='text-2xl leading-10 font-bold' >{title==="Total visits"?visits:(title==="Submission Rate"?(submissionRate+"%"):(title==="Bounce Rate"?(100-submissionRate+"%"):value))}</h1>
         <h3 className='text-xs text-muted-foreground pt-1' >{subHeading}</h3>
     </div>
   )
