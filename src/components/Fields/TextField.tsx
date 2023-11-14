@@ -12,6 +12,7 @@ import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
 import useDesigner from "../hooks/useDesigner";
 import { cn } from "@/lib/utils";
+import { toast } from "react-toastify";
 
 const type: ElementsType = "TextField";
 
@@ -159,6 +160,7 @@ function PropertiesComponent({
   const applyChanges = (e:any)=>{
     e.preventDefault()
     updateElement(element.id,{...element,extraAttributes:formData})
+    toast.success("Form Values Updated Save it Now!!")
   }
 
   return (

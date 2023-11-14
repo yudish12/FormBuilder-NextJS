@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
 import Image from "next/image";
 import { Separator } from "../ui/separator";
+import { toast } from "react-toastify";
 
 const type: ElementsType = "SeperatorField";
 
@@ -117,6 +118,7 @@ function PropertiesComponent({
   const applyChanges = (e: any) => {
     e.preventDefault();
     updateElement(element.id, { ...element, extraAttributes: formData });
+    toast.success("Form Values Updated Save it Now!!")
   };
 
   return (

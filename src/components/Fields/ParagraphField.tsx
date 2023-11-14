@@ -13,6 +13,7 @@ import { Button } from "../ui/button";
 import useDesigner from "../hooks/useDesigner";
 import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
+import { toast } from "react-toastify";
 
 const type: ElementsType = "ParagraphField";
 
@@ -115,6 +116,7 @@ function PropertiesComponent({
   const applyChanges = (e:any)=>{
     e.preventDefault()
     updateElement(element.id,{...element,extraAttributes:formData})
+    toast.success("Form Values Updated Save it Now!!")
   }
 
   return (

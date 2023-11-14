@@ -16,7 +16,7 @@ export default async function handler(
 ) {
   switch (req.method) {
     case "PATCH":
-
+      const {content} = req.body
       const queryString = req?.url?.split("?")[1];
       const searchParams = new URLSearchParams(queryString);
       const id = searchParams.get("formid");
@@ -31,6 +31,7 @@ export default async function handler(
       const form = await prisma.form.update({
         data: {
           published: true,
+          content:JSON.stringify(content)
         },
         where: {
             userId: userid,

@@ -29,7 +29,7 @@ const Modal = ({setOpen}:{setOpen:React.Dispatch<React.SetStateAction<boolean>>}
             <h1 className='tracking-tight text-xl  font-semibold' >Create Form</h1>
             <h3 className='text-lg font-normal text-muted-foreground pt-1' > Create a new form to start collecting responses </h3>
             </div>
-            <Image onClick={()=>setOpen(false)} className='cursor-pointer' alt='cross' src={'/cross.svg'} width={20} height={20} />
+            <Image onClick={()=>setOpen(false)} className='cursor-pointer' alt='cross' src={'/Cross.svg'} width={20} height={20} />
 
         </div>
         <div className="w-full p-6">

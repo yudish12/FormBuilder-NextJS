@@ -16,16 +16,20 @@ import {
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
 import { toast } from "./ui/use-toast";
+import useDesigner from "./hooks/useDesigner";
 
 
 function PublishFormBtn({ id }: { id: number }) {
+  const {elements} = useDesigner();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   async function publishForm() {
     setLoading(true);
     try {
-      const resp = await axios.patch(`/api/publishform?formid=${id}`)
+      const resp = await axios.patch(`/api/publishform?formid=${id}`,{
+        content:elements
+      })
       if(resp.status===200){
         console.log("Asd")
 
