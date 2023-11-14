@@ -50,3 +50,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
       | POSTGRES_DATABASE                   | from vercel postgres db  | database related stuff             |
 
 
+### Project Journey Video
+
+https://github.com/yudish12/FormBuilder-NextJS/assets/82305974/a983f8b7-ff61-4e17-98ea-36611a6e6965
+
+### Deployed URL
+https://form-builder-next-js-weld.vercel.app/
+
